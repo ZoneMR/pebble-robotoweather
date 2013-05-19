@@ -17,8 +17,19 @@ void link_monitor_ping()
 	http_time_request();
 }
 
-void link_monitor_handle_failure()
+void link_monitor_handle_failure(int error)
 {
+	switch(error)
+	{
+		case 1008: //Watchapp not running
+			//Considered a link failure
+			break;
+		
+		default:
+			//Unrecognised failure reason. Debug.
+			text_layer_set_text(&date_layer, itoa(error));
+	}
+	
 	if(__linkStatus == LinkStatusOK)
 	{
 		//The link has just failed, notify the user

@@ -6,5 +6,5 @@
 #include "util.h"
 
 void link_monitor_ping();
-void link_monitor_handle_failure();
+void link_monitor_handle_failure(int error);
 void link_monitor_handle_success();

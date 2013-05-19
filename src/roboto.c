@@ -51,10 +51,13 @@ void request_weather();
 void failed(int32_t cookie, int http_status, void* context) {
 	if(cookie == 0 || cookie == WEATHER_HTTP_COOKIE) {
 		weather_layer_set_icon(&weather_layer, WEATHER_ICON_NO_WEATHER);
-		text_layer_set_text(&weather_layer.temp_layer, "--°");
+		text_layer_set_text(&weather_layer.temp_layer, "---°");
 	}
 	
-	link_monitor_handle_failure();
+	link_monitor_handle_failure(http_status);
+	
+	//Re-request the location and subsequently weather on next minute tick
+	located = false;
 }
 
 void success(int32_t cookie, int http_status, DictionaryIterator* received, void* context) {

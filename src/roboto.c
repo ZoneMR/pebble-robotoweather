@@ -13,7 +13,7 @@
 
 PBL_APP_INFO(MY_UUID,
              "Roboto Weather", "Martin Rosinski",
-             1, 5, /* App version */
+             1, 6, /* App version */
              RESOURCE_ID_IMAGE_MENU_ICON,
              APP_INFO_WATCH_FACE);
 

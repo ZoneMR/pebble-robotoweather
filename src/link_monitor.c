@@ -25,6 +25,10 @@ void link_monitor_handle_failure(int error)
 			//Considered a link failure
 			break;
 		
+		case 1064: //APP_MSG_BUSY
+			//These are more likely to specify a temporary error than a lost watch
+			return;
+		
 		default:
 			//Unrecognised failure reason. Debug.
 			text_layer_set_text(&date_layer, itoa(error));

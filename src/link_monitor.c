@@ -1,4 +1,5 @@
 #include "link_monitor.h"
+#include "config.h"
 
 enum LinkStatus
 {
@@ -28,10 +29,12 @@ void link_monitor_handle_failure(int error)
 		case 1064: //APP_MSG_BUSY
 			//These are more likely to specify a temporary error than a lost watch
 			return;
-		
+	
+#ifdef DEBUG
 		default:
 			//Unrecognised failure reason. Debug.
 			text_layer_set_text(&date_layer, itoa(error));
+#endif
 	}
 	
 	if(__linkStatus == LinkStatusOK)

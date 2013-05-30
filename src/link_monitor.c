@@ -41,7 +41,7 @@ void link_monitor_handle_failure(int error)
 	{
 		//The link has just failed, notify the user
 		// Vibe pattern: ON, OFF, ON, ...
-		static const uint32_t const segments[] = { 200, 100, 200, 100, 200, 100, 500 };
+		static const uint32_t const segments[] = { 150, 100, 150, 100, 300 };
 		VibePattern pat = {
 			.durations = segments,
 			.num_segments = ARRAY_LENGTH(segments),

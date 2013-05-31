@@ -227,8 +227,8 @@ void pbl_main(void *params)
         },
 		.messaging_info = {
 			.buffer_sizes = {
-				.inbound = 256,
-				.outbound = 256,
+				.inbound = 124,
+				.outbound = 124,
 			}
 		}
     };

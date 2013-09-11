@@ -40,6 +40,8 @@ GFont font_date;        /* font for date (normal) */
 GFont font_hour;        /* font for hour (bold) */
 GFont font_minute;      /* font for minute (thin) */
 
+static int initial_minute;
+
 //Weather Stuff
 static int our_latitude, our_longitude;
 static bool located = false;
@@ -65,7 +67,7 @@ void success(int32_t cookie, int http_status, DictionaryIterator* received, void
 	Tuple* icon_tuple = dict_find(received, WEATHER_KEY_ICON);
 	if(icon_tuple) {
 		int icon = icon_tuple->value->int8;
-		if(icon >= 0 && icon < 10) {
+		if(icon >= 0 && icon < 16) {
 			weather_layer_set_icon(&weather_layer, icon);
 		} else {
 			weather_layer_set_icon(&weather_layer, WEATHER_ICON_NO_WEATHER);
@@ -134,9 +136,9 @@ void handle_minute_tick(AppContextRef ctx, PebbleTickEvent *t)
     string_format_time(minute_text, sizeof(minute_text), ":%M", t->tick_time);
     time_layer_set_text(&time_layer, hour_text, minute_text);
 	
-	if(!located || !(t->tick_time->tm_min % 15))
+	if(!located || (t->tick_time->tm_min % 30) == initial_minute)
 	{
-		//Every 15 minutes, request updated weather
+		//Every 30 minutes, request updated weather
 		http_location_request();
 	}
 	else
@@ -197,6 +199,8 @@ void handle_init(AppContextRef ctx)
     t.tick_time = &tm;
     t.units_changed = SECOND_UNIT | MINUTE_UNIT | HOUR_UNIT | DAY_UNIT;
 	
+	initial_minute = (tm.tm_min % 30);
+	
 	handle_minute_tick(ctx, &t);
 }
 
@@ -243,7 +247,7 @@ void request_weather() {
 	}
 	// Build the HTTP request
 	DictionaryIterator *body;
-	HTTPResult result = http_out_get("http://www.zone-mr.net/api/weather.php", WEATHER_HTTP_COOKIE, &body);
+	HTTPResult result = http_out_get("http://ofkorth.net/pebble/weather", WEATHER_HTTP_COOKIE, &body);
 	if(result != HTTP_OK) {
 		weather_layer_set_icon(&weather_layer, WEATHER_ICON_NO_WEATHER);
 		return;

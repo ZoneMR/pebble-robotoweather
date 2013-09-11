@@ -1,5 +1,5 @@
 // Any of "us", "ca", "uk" (for idiosyncratic US, Candian and British measurements),
 // "si" (for pure metric) or "auto" (determined by the above latitude/longitude)
-#define UNIT_SYSTEM "auto"
+#define UNIT_SYSTEM "f"
 #define SILENT 1
 //#define DEBUG

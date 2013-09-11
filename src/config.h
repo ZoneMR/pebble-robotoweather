@@ -1,5 +1,5 @@
-// Any of "us", "ca", "uk" (for idiosyncratic US, Candian and British measurements),
-// "si" (for pure metric) or "auto" (determined by the above latitude/longitude)
-#define UNIT_SYSTEM "f"
+// UNIT_SYSTEM: use "c" for Celsius or "f" for Fahrenheit
+#define UNIT_SYSTEM "c"
+// SILENT: use 0 to enable vibrations or 1 to mute robotoweather
 #define SILENT 1
 //#define DEBUG

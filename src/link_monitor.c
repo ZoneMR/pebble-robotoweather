@@ -50,8 +50,8 @@ void link_monitor_handle_failure(int error)
 			.durations = segments,
 			.num_segments = ARRAY_LENGTH(segments),
 		};
-	
-		vibes_enqueue_custom_pattern(pat);
+		if(SILENT == 0)
+			vibes_enqueue_custom_pattern(pat);
 	}
 	
 	__linkStatus = LinkStatusFailed;
@@ -62,7 +62,8 @@ void link_monitor_handle_success()
 	if(__linkStatus == LinkStatusFailed)
 	{
 		//Notify the user of reconnection
-		vibes_short_pulse();
+		if(SILENT == 0)
+			vibes_short_pulse();
 	}
 	
 	__linkStatus = LinkStatusOK;
